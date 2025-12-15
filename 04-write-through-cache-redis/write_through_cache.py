@@ -52,6 +52,9 @@ def insert_write_through(cur, conn, r):
 def cache_lookup_test(cur, r, key_range, label):
     hits = 0
     misses = 0
+
+    t0 = time.perf_counter()
+
     for _ in range(N_LOOKUPS):
         k = random.randint(*key_range)
         v = r.get(str(k))
@@ -62,7 +65,17 @@ def cache_lookup_test(cur, r, key_range, label):
             row = cur.fetchone()
             if row:
                 misses += 1
-    print(f"{label}: Redis hits: {hits}, misses (found in Postgres): {misses}, total: {N_LOOKUPS}")
+
+    t1 = time.perf_counter()
+
+    print(
+        f"{label}: "
+        f"hits={hits}, "
+        f"misses={misses}, "
+        f"total={N_LOOKUPS}, "
+        f"time={t1 - t0:.4f}s, "
+        f"avg={(t1 - t0) / N_LOOKUPS * 1e6:.1f}µs/op"
+    )
 
 def main():
     conn = psycopg2.connect(
