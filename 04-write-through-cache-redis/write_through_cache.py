@@ -13,9 +13,9 @@ REDIS_HOST = "localhost"
 REDIS_PORT = 6379
 DB_BATCH = 1000
 
-N_FIRST = 10_000
-N_SECOND = 10_000
-N_LOOKUPS = 100
+N_FIRST = 100_000
+N_SECOND = 100_000
+N_LOOKUPS = 1000
 
 
 def setup_db(cur, conn):

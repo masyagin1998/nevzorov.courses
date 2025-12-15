@@ -1,6 +1,6 @@
 services:
   postgresql-master:
-    image: bitnami/postgresql:16
+    image: bitnami/postgresql:latest
     ports: ["5432:5432"]
     volumes:
       - postgresql_master_data:/bitnami/postgresql
@@ -22,7 +22,7 @@ services:
       retries: 30
 
   postgresql-slave:
-    image: bitnami/postgresql:16
+    image: bitnami/postgresql:latest
     ports: ["5433:5432"]
     depends_on:
       postgresql-master:
@@ -50,6 +50,9 @@ services:
 volumes:
   postgresql_master_data:
   postgresql_slave_data:
+
+# pip install pgcli
+# alias psql=pgcli
 
 # PGPASSWORD= psql -h 127.0.0.1 -p 5432 -U postgres -d my_database
 # SELECT pg_is_in_recovery(); 
